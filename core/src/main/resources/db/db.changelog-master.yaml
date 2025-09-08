@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/001-create-clients-table.sql
+  - include:
+      file: db/changelog/changes/remove-apple-oauth-fields.yaml

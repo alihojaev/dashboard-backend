@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: remove-apple-oauth-fields
+      author: system
+      changes:
+        - dropColumn:
+            tableName: clients
+            columnName: apple_id
+        - dropColumn:
+            tableName: clients
+            columnName: apple_email 

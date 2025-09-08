@@ -1,0 +1,106 @@
+spring:
+  profiles.active: dev
+  http.encoding.charset: UTF-8
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  jpa:
+    open-in-view: false
+    database: default
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/template_db
+    username: template
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    contexts: liqui-dev
+    change-log: db/db.changelog-master.yaml
+  servlet:
+    multipart:
+      max-file-size: 102400KB
+      max-request-size: 102400KB
+  datasourceJdbc:
+    cachePrepStmts: true
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
+    idleTimeout: 30000
+    maxLifetime: 60000
+    maximumPoolSize: 500
+    connectionTimeout: 120000
+
+minio:
+  url: ${MINIO_URL:}
+  access-key: ${MINIO_ACCESS_KEY:}
+  secret-key: ${MINIO_SECRET_KEY:}
+
+yandex:
+  translate:
+    api-key: ${YANDEX_TRANSLATE_API_KEY:}
+    folder-id: ${YANDEX_TRANSLATE_FOLDER_ID:}
+    url: ${YANDEX_TRANSLATE_URL:https://translate.api.cloud.yandex.net/translate/v2/translate}
+
+logging:
+  level:
+    com:
+      parser:
+        server: INFO
+  #    org.springframework.web: DEBUG
+  #    org.hibernate: DEBUG
+  #    com.fasterxml.jackson: DEBUG
+
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:}
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    password: ${DB_PASSWORD:}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+
+server.port: 8081
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: client-api
+  datasource:
+    password: ${DB_PASSWORD:}
+
+server.port: 8081
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: admin-api
+  datasource:
+    password: ${DB_PASSWORD:}
+
+server.port: 8083
+
+---
